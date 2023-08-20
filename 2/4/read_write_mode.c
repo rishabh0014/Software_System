@@ -7,7 +7,6 @@
 
 int main(int argc, char* argv[]) {
 	FILE *demo;
-
 	demo = fopen("demoo.txt","r+");
 	fprintf(demo, "%s", "RRR");
 	return 0;

@@ -5,14 +5,12 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
-        return 1;
+        printf(":(");
+        return 0;
     }
 
-    const char *filename = argv[1];
-
     // Open the file
-    int fd = open(filename, O_RDWR);
+    int fd = open(argv[1], O_RDWR);
     if (fd == -1) {
         perror("Error opening file");
         return 1;
@@ -28,13 +26,13 @@ int main(int argc, char *argv[]) {
 
     // Check the file opening mode
     if (flags & O_RDONLY)
-        printf("%s is opened in read-only mode.\n", filename);
+        printf("%s is opened in read-only mode.\n", file);
     else if (flags & O_WRONLY)
-        printf("%s is opened in write-only mode.\n", filename);
+        printf("%s is opened in write-only mode.\n", file);
     else if (flags & O_RDWR)
-        printf("%s is opened in read-write mode.\n", filename);
+        printf("%s is opened in read-write mode.\n", file);
     else
-        printf("%s is opened in an unknown mode.\n", filename);
+        printf("%s is opened in an unknown mode.\n", file);
 
     // Close the file
     close(fd);

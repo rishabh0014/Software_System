@@ -19,11 +19,10 @@ int main() {
         return 1;
     }
 
-    // Calculate record offset and size
-    int record_offset = 0;  // Start with the first record
+    
+    int record_offset = 0;  
     struct Record record;
 
-    // Lock the record with a write lock
     struct flock lock;
     lock.l_type = F_WRLCK;
     lock.l_whence = SEEK_SET;
@@ -36,19 +35,15 @@ int main() {
         return 1;
     }
 
-    // Read the record
     lseek(fd, record_offset * RECORD_SIZE, SEEK_SET);
     read(fd, &record, RECORD_SIZE);
 
-    // Modify the record
     record.id++;
     snprintf(record.data, sizeof(record.data), "Modified Data");
 
-    // Write the modified record back to the file
     lseek(fd, record_offset * RECORD_SIZE, SEEK_SET);
     write(fd, &record, RECORD_SIZE);
 
-    // Release the lock
     lock.l_type = F_UNLCK;
 
     if (fcntl(fd, F_SETLKW, &lock) == -1) {

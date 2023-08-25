@@ -9,14 +9,15 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // Open the file
-    int fd = open(argv[1], O_RDWR);
+    const char *file = argv[1];
+
+    int fd = open(file, O_RDWR);
     if (fd == -1) {
         perror("Error opening file");
         return 1;
     }
 
-    // Use fcntl to get the file opening mode (flags)
+    
     int flags = fcntl(fd, F_GETFL);
     if (flags == -1) {
         perror("Error getting file flags");
@@ -24,7 +25,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Check the file opening mode
     if (flags & O_RDONLY)
         printf("%s is opened in read-only mode.\n", file);
     else if (flags & O_WRONLY)
@@ -34,7 +34,6 @@ int main(int argc, char *argv[]) {
     else
         printf("%s is opened in an unknown mode.\n", file);
 
-    // Close the file
     close(fd);
 
     return 0;

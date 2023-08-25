@@ -5,36 +5,31 @@
 #include <fcntl.h>
 
 int main() {
-    const char *filename = "test_file.txt";
-    const char *content = "Hello, World!\n";
+    const char *filename = "x.txt";
+    const char *str = "Hello :) \n";
 
-    // Open the file for writing
+ 
     int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
     if (fd == -1) {
         perror("Error opening file");
         return 1;
     }
 
-    // Duplicate the file descriptor using dup
-    int fd_duplicate = dup(fd);
+    int fd_dup = dup(fd);
 
-    // Append content using the original descriptor
-    write(fd, content, strlen(content));
+    write(fd, str, strlen(str));
 
-    // Append content using the duplicated descriptor
-    write(fd_duplicate, content, strlen(content));
+    write(fd_dup, str, strlen(str));
 
-    // Use dup2 to duplicate the descriptor and update the duplicated one
-    int fd_dup2 = dup2(fd, fd_duplicate);
-    write(fd_duplicate, content, strlen(content));
+    
+    int fd_dup2 = dup2(fd, fd_dup);
+    write(fd_dup, str, strlen(str));
 
-    // Use fcntl to duplicate and update the descriptor
     int fd_fcntl = fcntl(fd, F_DUPFD, 0);
-    write(fd_fcntl, content, strlen(content));
+    write(fd_fcntl, str, strlen(str));
 
-    // Close all descriptors
     close(fd);
-    close(fd_duplicate);
+    close(fd_dup);
     close(fd_dup2);
     close(fd_fcntl);
 
@@ -43,11 +38,11 @@ int main() {
     if (file) {
         char buffer[100];
         while (fgets(buffer, sizeof(buffer), file)) {
-            printf("File content: %s", buffer);
+            printf("File str: %s", buffer);
         }
         fclose(file);
     } else {
-        perror("Error opening file for reading");
+        perror(":(");
         return 1;
     }
 

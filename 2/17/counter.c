@@ -1,46 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
-#include <sys/file.h>
+#include <unistd.h>
+#include <string.h>
 
 int main() {
-    const char *filename = "ticket_file.txt";
+    int ticket;
+    printf("Enter the ticket number: ");
+    scanf("%d", &ticket);
+    printf("Ticket number: %d\n", ticket);
 
-    int fd = open(filename, O_RDWR | O_CREAT, 0666);
+    struct flock fl = { F_WRLCK, SEEK_SET,0,0,0};
+    fl.l_pid = getpid();
+    int fd = open("tickets.txt", O_WRONLY | O_CREAT, 0644);
     if (fd == -1) {
         perror("Error opening file");
         return 1;
     }
 
-    // Acquire a write lock on the file
-    if (flock(fd, LOCK_EX) == -1) {
-        perror("Error acquiring lock");
-        close(fd);
-        return 1;
+    printf("Waiting for Lock!!\n");
+
+    if (fcntl(fd, F_SETLKW, &fl) == -1){
+        perror(":(");
+        exit(1);
     }
-
-    // Read the current ticket number
-    int ticket_number;
-    read(fd, &ticket_number, sizeof(ticket_number));
-
-    // Increment the ticket number
-    ticket_number++;
-
-    // Write the updated ticket number back to the file
-    lseek(fd, 0, SEEK_SET);
-    write(fd, &ticket_number, sizeof(ticket_number));
-
-    printf("New ticket number: %d\n", ticket_number);
-
-    // Release the lock
-    if (flock(fd, LOCK_UN) == -1) {
-        perror("Error releasing lock");
-        close(fd);
-        return 1;
+    
+    char buffer[20];
+    snprintf(buffer, sizeof(buffer), "%d\n", ticket);
+    write(fd, buffer, strlen(buffer));
+    
+    printf("Press Enter!!!\n");
+    getchar(); 
+    getchar(); 
+    fl.l_type = F_UNLCK; 
+    if (fcntl(fd, F_SETLK, &fl) == -1) {
+        perror("fcntl");
+        exit(1);
     }
-
+    printf("Lock Released :)\n");
     close(fd);
-
+    
     return 0;
 }

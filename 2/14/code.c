@@ -10,14 +10,11 @@ int main(int argc, char *argv[]) {
 
     const char *filename = argv[1];
     struct stat file_stat;
-
-    // Use stat to get file attributes
     if (stat(filename, &file_stat) == -1) {
         perror("Error getting file information");
         return 1;
     }
 
-    // Determine and print the file type
     if (S_ISREG(file_stat.st_mode)) {
         printf("%s is a regular file.\n", filename);
     } else if (S_ISDIR(file_stat.st_mode)) {

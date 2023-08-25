@@ -4,31 +4,30 @@
 #include <stdlib.h>
 
 int main() {
-    char* path = "test_file.txt";
-    int file = open(path, O_RDWR);
+    int fd = open("x.txt", O_RDWR);
 
-    if (file == -1) {
+    if (fd == -1) {
         perror(":(");
         return 1;
     }
 
     char data1[] = "ABCDEFGHIJ";
-    write(file, data1, sizeof(data1) - 1); 
+    write(fd, data1, sizeof(data1) - 1); 
 
     
-    off_t seek_offset = lseek(file, 10, SEEK_CUR);
+    off_t seek_offset = lseek(fd, 10, SEEK_CUR);
     printf("lseek return value: %ld\n", seek_offset);
 
 
-    const char data2[] = "abc4efghij";
-    write(file, data2, sizeof(data2) - 1); 
+    const char data2[] = "abcd4fghij";
+    write(fd, data2, sizeof(data2) - 1); 
 
-    close(file);
+    close(fd);
 
     
-    char od_command[100];
-    snprintf(od_command, sizeof(od_command), "od -c %s", path);
-    system(od_command);
+    char temp[100];
+    snprintf(temp, sizeof(temp), "od -c %s", "x.txt");
+    system(temp);
 
     return 0;
 }

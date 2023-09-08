@@ -19,7 +19,7 @@ int main() {
         printf("Child 1 => pid = %d\n",getpid());
         exit(0);
     }
-
+        
     pid2 = fork();
     if(pid2==0){
         printf("Child 2 => pid = %d\n",getpid());

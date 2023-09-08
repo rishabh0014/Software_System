@@ -29,6 +29,7 @@ int main() {
         perror("execl"); 
         exit(1);
     }
+    wait(NULL);
 
     child_pid = fork();
     if (child_pid == -1) {
@@ -36,10 +37,11 @@ int main() {
         return 1;
     } else if (child_pid == 0) {
         printf("\nUsing fork and execlp:\n");
-        execlp("/bin/ls", "ls", "-Rl", NULL);
+        execlp("ls", "ls", "-Rl", NULL);
         perror("execlp"); 
         exit(1);
     }
+    wait(NULL);
 
     child_pid = fork();
     if (child_pid == -1) {
@@ -52,7 +54,7 @@ int main() {
         perror("execle"); 
         exit(1);
     }
-
+    wait(NULL);
     child_pid = fork();
     if (child_pid == -1) {
         perror("fork");
@@ -64,6 +66,7 @@ int main() {
         perror("execv"); 
         exit(1);
     }
+    wait(NULL);
 
     child_pid = fork();
     if (child_pid == -1) {
@@ -77,9 +80,7 @@ int main() {
         exit(1);
     }
 
-    for (int i = 0; i < 5; i++) {
-        wait(NULL);
-    }
+    wait(NULL);
 
     return 0;
 }

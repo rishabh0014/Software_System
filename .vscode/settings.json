@@ -4,6 +4,8 @@
         "unistd.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "random": "c"
+        "random": "c",
+        "fcntl.h": "c",
+        "wait.h": "c"
     }
 }

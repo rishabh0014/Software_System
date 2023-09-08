@@ -12,8 +12,8 @@ Description : 26. Write a program to execute an executable program.
 #include <unistd.h>
 
 int main() {
-    char *program = "./temp.out"; 
-    char *args[] = {program, "This string to be printed", NULL};  
+    char *program = "./dont_delete.out"; 
+    char *args[] = {program, "Print me", NULL};  
 
     execvp(program, args);
 

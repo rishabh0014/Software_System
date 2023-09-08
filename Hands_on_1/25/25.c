@@ -12,29 +12,30 @@ Description : 25. Write a program to create three child processes. The parent sh
 #include <unistd.h>
 
 int main() {
-    pid_t child_pids[3];
+    pid_t pid1,pid2,pid3;
 
-    for (int i = 0; i < 3; ++i) {
-        pid_t pid = fork();
-
-        if (pid == -1) {
-            perror("fork");
-            return 1;
-        } else if (pid == 0) {
-            printf("Child %d (PID %d) executing\n", i + 1, getpid());
-            sleep(i + 1);
-            printf("Child %d (PID %d) exiting\n", i + 1, getpid());
-            exit(0);
-        } else {
-            child_pids[i] = pid;
-        }
+    pid1 = fork();
+    if(pid1==0){
+        printf("Child 1 => pid = %d\n",getpid());
+        exit(0);
     }
 
-    int status;
-    pid_t second_child_pid = child_pids[1];
-    printf("Parent process (PID %d) waiting for second child (PID %d)...\n", getpid(), second_child_pid);
-    waitpid(second_child_pid, &status, 0);
-    printf("Parent process (PID %d) finished waiting for second child (PID %d)\n", getpid(), second_child_pid);
+    pid2 = fork();
+    if(pid2==0){
+        printf("Child 2 => pid = %d\n",getpid());
+        exit(0);
+    }
 
+    pid3 = fork();
+    if(pid3==0){
+        printf("Child 3 => pid = %d\n",getpid());
+        exit(0);
+    }
+    int status;
+    pid_t first_child_pid = waitpid(pid1, &status, 0);
+    if(first_child_pid == pid1){
+        printf("Parent: Child 1 with pid %d terminated\n",pid1);
+    }
+    printf("Parent : All processes terminated\n");
     return 0;
 }

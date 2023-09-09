@@ -44,7 +44,7 @@ int main() {
         perror("Error: sched_setscheduler");
         exit(EXIT_FAILURE);
     }
-    pid = getpid();
+    // pid = getpid();
     curr_schedu_poli = sched_getscheduler(pid);
     
     printf("\nScheduling policy changed Successfully\n\n");

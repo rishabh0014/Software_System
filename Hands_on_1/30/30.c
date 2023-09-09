@@ -12,14 +12,12 @@ Description : 30. Write a program to run a script at a specific time using a Dae
 #include <sys/stat.h>
 #include<time.h>
 
-
 int main(void)
 {
 
     struct tm exectime;
     exectime.tm_hour = 1;
 	exectime.tm_min = 25;
-	
 	if(fork()==0){
 		setsid();
 		umask(0);

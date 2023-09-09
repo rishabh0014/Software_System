@@ -27,10 +27,6 @@ int main() {
         else if(errno == ESRCH){
             perror("No such Process");
         }
-        else{
-            perror("ERROR");
-        }
-        return 1;
     }
 
     printf("Priority of the current process (PID %d) is %d\n", pid, priority);
@@ -49,10 +45,6 @@ int main() {
         else if(errno == ESRCH){
             perror("No such Process");
         }
-        else{
-            perror("ERROR");
-        }
-        return 1;
     }
     printf("Modified Priority of the current process (PID %d) is %d\n", pid, priority);
 

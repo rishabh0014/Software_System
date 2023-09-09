@@ -23,7 +23,7 @@ struct Record {
 int main() {
     const char *filename = "records_file.txt";
 
-    int fd = open(filename, O_RDWR | O_CREAT, 0666);
+    int fd = open(filename, O_RDWR | O_CREAT, 0766);
     if (fd == -1) {
         perror("Error opening file");
         return 1;

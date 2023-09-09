@@ -1,6 +1,6 @@
 /*
 ============================================================================
-Name : 9.c
+Name : 11.c
 Author : Rishabh Teli
 Description : 11. Write a program to open a file, duplicate the file descriptor and append the file with both thedescriptors and check whether the file is updated properly or not.
             a. use dup
@@ -43,7 +43,6 @@ int main() {
     close(fd_dup2);
     close(fd_fcntl);
 
-    // Check the file's contents
     FILE *file = fopen(filename, "r");
     if (file) {
         char buffer[100];

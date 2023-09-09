@@ -30,7 +30,7 @@ void find_curr_poli(int curr_schedu_poli){
 
 int main() {
     int pid = getpid();
-    int curr_schedu_poli = sched_getscheduler(0); 
+    int curr_schedu_poli = sched_getscheduler(pid); 
 
     if (curr_schedu_poli == -1) {
         perror("Error: sched_getscheduler");
@@ -44,7 +44,8 @@ int main() {
         perror("Error: sched_setscheduler");
         exit(EXIT_FAILURE);
     }
-    curr_schedu_poli = sched_getscheduler(0);
+    pid = getpid();
+    curr_schedu_poli = sched_getscheduler(pid);
     
     printf("\nScheduling policy changed Successfully\n\n");
     

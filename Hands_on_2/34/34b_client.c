@@ -1,6 +1,6 @@
 /*
 ============================================================================
-Name : 34a_client.c
+Name : 34b_client.c
 Author : Rishabh Teli
 Description : 34. Write a program to create a concurrent server.
                 a. use fork
